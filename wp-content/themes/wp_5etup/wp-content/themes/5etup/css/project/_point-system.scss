@@ -1,0 +1,58 @@
+$point-system:
+    "1" 4,
+    "2" 8,
+    "3" 12,
+    "4" 16,
+    "5" 20,
+    "6" 24,
+    "7" 28,
+    "8" 32, 
+    "9" 36,
+    "10" 40,
+;
+
+@each $system-number, $system-amount in $point-system  {
+    // Padding
+    %ps-padding-top-#{$system-number} {
+        padding-top: #{$system-amount}px;
+    }
+    %ps-padding-right-#{$system-number} {
+        padding-right: #{$system-amount}px;
+    }
+    %ps-padding-bottom-#{$system-number} {
+        padding-bottom: #{$system-amount}px;
+    }
+    %ps-padding-left-#{$system-number} {
+        padding-left: #{$system-amount}px;
+    }
+    %ps-padding-top-bottom-#{$system-number} {
+        padding-top: #{$system-amount}px;
+        padding-bottom: #{$system-amount}px;
+    }
+    %ps-padding-left-right-#{$system-number} {
+        padding-left: #{$system-amount}px;
+        padding-right: #{$system-amount}px;
+    }
+
+    // Margin
+    %ps-margin-top-#{$system-number} {
+        margin-top: #{$system-amount}px;
+    }
+    %ps-margin-right-#{$system-number} {
+        margin-right: #{$system-amount}px;
+    }
+    %ps-margin-bottom-#{$system-number} {
+        margin-bottom: #{$system-amount}px;
+    }
+    %ps-margin-left-#{$system-number} {
+        margin-left: #{$system-amount}px;
+    }
+    %ps-margin-top-bottom-#{$system-number} {
+        margin-top: #{$system-amount}px;
+        margin-bottom: #{$system-amount}px;
+    }
+    %ps-margin-left-right-#{$system-number} {
+        margin-left: #{$system-amount}px;
+        margin-right: #{$system-amount}px;
+    }
+}

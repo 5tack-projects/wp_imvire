@@ -1,0 +1,8 @@
+{
+  "name": "suraj/wp-5etup",
+  "description": "Default theme from Suraj",
+  "type": "wordpress-theme",
+  "require": {
+    "composer/installers": "^2.3"
+  }
+}
