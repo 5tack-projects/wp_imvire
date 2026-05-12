@@ -1,0 +1,23 @@
+{
+  "name": "suraj/project-x",
+  "type": "project",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@github.com:5tack-projects/wp_5etup.git"
+    }
+  ],
+  "require": {
+    "composer/installers": "^2.3",
+    "suraj/wp-5etup": "dev-main"
+  },
+  "extra": {
+    "installer-paths": {
+      "wp-content/themes/wp_5etup/": [
+        "suraj/wp-5etup"
+      ]
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
