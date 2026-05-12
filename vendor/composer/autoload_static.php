@@ -6,13 +6,79 @@ namespace Composer\Autoload;
 
 class ComposerStaticInitb5188863f1666ff3435e0e64630d88c8
 {
+    public static $files = array (
+        '941748b3c8cae4466c827dfb5ca9602a' => __DIR__ . '/..' . '/rmccue/requests/library/Deprecated.php',
+        '3937806105cc8e221b8fa8db5b70d2f2' => __DIR__ . '/..' . '/wp-cli/mustangostang-spyc/includes/functions.php',
+        'be01b9b16925dcb22165c40b46681ac6' => __DIR__ . '/..' . '/wp-cli/php-cli-tools/lib/cli/cli.php',
+    );
+
+    public static $prefixLengthsPsr4 = array (
+        'W' => 
+        array (
+            'WpOrg\\Requests\\' => 15,
+        ),
+        'S' => 
+        array (
+            'Symfony\\Component\\Finder\\' => 25,
+        ),
+        'M' => 
+        array (
+            'Mustangostang\\' => 14,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'WpOrg\\Requests\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/rmccue/requests/src',
+        ),
+        'Symfony\\Component\\Finder\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/finder',
+        ),
+        'Mustangostang\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/wp-cli/mustangostang-spyc/src',
+        ),
+    );
+
+    public static $prefixesPsr0 = array (
+        'c' => 
+        array (
+            'cli' => 
+            array (
+                0 => __DIR__ . '/..' . '/wp-cli/php-cli-tools/lib',
+            ),
+        ),
+        'W' => 
+        array (
+            'WP_CLI\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/wp-cli/wp-cli/php',
+            ),
+        ),
+        'M' => 
+        array (
+            'Mustache' => 
+            array (
+                0 => __DIR__ . '/..' . '/mustache/mustache/src',
+            ),
+        ),
+    );
+
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Requests' => __DIR__ . '/..' . '/rmccue/requests/library/Requests.php',
+        'WP_CLI' => __DIR__ . '/..' . '/wp-cli/wp-cli/php/class-wp-cli.php',
+        'WP_CLI_Command' => __DIR__ . '/..' . '/wp-cli/wp-cli/php/class-wp-cli-command.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInitb5188863f1666ff3435e0e64630d88c8::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitb5188863f1666ff3435e0e64630d88c8::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitb5188863f1666ff3435e0e64630d88c8::$prefixesPsr0;
             $loader->classMap = ComposerStaticInitb5188863f1666ff3435e0e64630d88c8::$classMap;
 
         }, null, ClassLoader::class);

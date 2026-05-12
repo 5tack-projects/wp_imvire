@@ -1,5 +1,8 @@
 {
   "name": "suraj/wp-5etup",
   "description": "Default WordPress stack from Suraj",
-  "type": "library"
+  "type": "library",
+  "require-dev": {
+    "wp-cli/wp-cli": "2.8"
+  }
 }

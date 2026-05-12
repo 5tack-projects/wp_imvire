@@ -7,4 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+    'Requests' => $vendorDir . '/rmccue/requests/library/Requests.php',
+    'WP_CLI' => $vendorDir . '/wp-cli/wp-cli/php/class-wp-cli.php',
+    'WP_CLI_Command' => $vendorDir . '/wp-cli/wp-cli/php/class-wp-cli-command.php',
 );

@@ -1,1 +1,0 @@
-<?= archive('blogs', 'post', '', 'article', 'blog') ?>
