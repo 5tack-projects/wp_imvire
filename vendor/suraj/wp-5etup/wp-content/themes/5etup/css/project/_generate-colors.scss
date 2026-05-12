@@ -1,0 +1,19 @@
+@import '../project/project-colors';
+
+@each $color-name, $color-code in $colors {
+    @each $shade, $value in $color-code {
+        %color-#{$color-name}-#{$shade} {
+            color: $value;
+            }
+        %bg-color-#{$color-name}-#{$shade} {
+            background-color: $value;
+        }
+        %border-color-#{$color-name}-#{$shade} {
+            border-color: $value;
+        }
+        %bg-border-color-#{$color-name}-#{$shade} {
+            border: 1px $value solid;
+            background-color: transparentize($color: $value, $amount: 0.9);
+        }
+    }
+}

@@ -1,0 +1,44 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "b5188863f1666ff3435e0e64630d88c8",
+    "packages": [
+        {
+            "name": "suraj/wp-5etup",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:5tack-projects/wp_5etup.git",
+                "reference": "5dd4bc509ad46a0b8cff85c9b4824c8e9c24c522"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/5tack-projects/wp_5etup/zipball/5dd4bc509ad46a0b8cff85c9b4824c8e9c24c522",
+                "reference": "5dd4bc509ad46a0b8cff85c9b4824c8e9c24c522",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "description": "Default WordPress stack from Suraj",
+            "support": {
+                "source": "https://github.com/5tack-projects/wp_5etup/tree/main",
+                "issues": "https://github.com/5tack-projects/wp_5etup/issues"
+            },
+            "time": "2026-05-12T14:22:41+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "suraj/wp-5etup": 20
+    },
+    "prefer-stable": true,
+    "prefer-lowest": false,
+    "platform": {},
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
+}
