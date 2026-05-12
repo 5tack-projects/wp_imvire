@@ -1,1 +1,0 @@
-<?= archive('projects', 'projects', '6', 'portfolio', 'projects') ?>
