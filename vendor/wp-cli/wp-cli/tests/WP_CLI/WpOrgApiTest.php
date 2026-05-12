@@ -3,11 +3,13 @@
 use WP_CLI\Tests\TestCase;
 use WP_CLI\WpOrgApi;
 
-require_once dirname( __DIR__ ) . '/mock-requests-transport.php';
-
 class WpOrgApiTest extends TestCase {
 
-	public function data_http_request_verify() {
+	public static function set_up_before_class() {
+		require_once dirname( __DIR__ ) . '/mock-requests-transport.php';
+	}
+
+	public static function data_http_request_verify() {
 		return [
 			'can retrieve core checksums'              => [
 				'get_core_checksums',

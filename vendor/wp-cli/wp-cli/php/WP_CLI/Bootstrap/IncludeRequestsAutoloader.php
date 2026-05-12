@@ -4,6 +4,7 @@ namespace WP_CLI\Bootstrap;
 
 use WP_CLI\Autoloader;
 use WP_CLI\RequestsLibrary;
+use WP_CLI\Utils;
 
 /**
  * Class IncludeRequestsAutoloader.
@@ -43,48 +44,66 @@ final class IncludeRequestsAutoloader implements BootstrapStep {
 	public function process( BootstrapState $state ) {
 		// If Requests is already loaded, don't do anything.
 		if ( class_exists( RequestsLibrary::CLASS_NAME_V2, false ) || class_exists( RequestsLibrary::CLASS_NAME_V1, false ) ) {
-			return;
+			return $state;
 		}
 
 		$runner = new RunnerInstance();
 
-		// Make sure we don't deal with an invalid `--path` value.
-		$config = $runner()->config;
-		if ( isset( $config['path'] ) &&
-			( is_bool( $config['path'] ) || empty( $config['path'] ) )
-		) {
-			return $state;
+		// Use `--path` from the alias if one is matching.
+		$alias_path = null;
+		if ( $runner()->alias
+			&& isset( $runner()->aliases[ $runner()->alias ]['path'] ) ) {
+			$alias_path = $runner()->aliases[ $runner()->alias ]['path'];
+			// Make sure it isn't an invalid value.
+			if ( is_bool( $alias_path ) || empty( $alias_path ) ) {
+				return $state;
+			}
+			if ( ! Utils\is_path_absolute( $alias_path ) ) {
+				$alias_path = getcwd() . '/' . $alias_path;
+			}
+			$wp_root = rtrim( $alias_path, '/' );
+		} else {
+			// Make sure we don't deal with an invalid `--path` value.
+			$config = $runner()->config;
+			if ( isset( $config['path'] ) &&
+				( is_bool( $config['path'] ) || empty( $config['path'] ) )
+			) {
+				return $state;
+			}
+			$wp_root = rtrim( $runner()->find_wp_root(), '/' );
 		}
-
-		$wp_root = rtrim( $runner()->find_wp_root(), '/' );
 
 		// First try to detect a newer Requests version bundled with WordPress.
 		if ( file_exists( $wp_root . '/wp-includes/Requests/src/Autoload.php' ) ) {
-			require_once $wp_root . '/wp-includes/Requests/src/Autoload.php';
+			if ( ! class_exists( '\\WpOrg\\Requests\\Autoload', false ) ) {
+				require_once $wp_root . '/wp-includes/Requests/src/Autoload.php';
+			}
 
-			\WpOrg\Requests\Autoload::register();
-
-			$this->store_requests_meta( RequestsLibrary::CLASS_NAME_V2, self::FROM_WP_CORE );
-
-			return $state;
+			if ( class_exists( '\\WpOrg\\Requests\\Autoload' ) ) {
+				\WpOrg\Requests\Autoload::register();
+				$this->store_requests_meta( RequestsLibrary::CLASS_NAME_V2, self::FROM_WP_CORE );
+				return $state;
+			}
 		}
 
 		// Then see if we can detect the older version bundled with WordPress.
 		if ( file_exists( $wp_root . '/wp-includes/class-requests.php' ) ) {
-			require_once $wp_root . '/wp-includes/class-requests.php';
+			if ( ! class_exists( '\\Requests', false ) ) {
+				require_once $wp_root . '/wp-includes/class-requests.php';
+			}
 
-			\Requests::register_autoloader();
-
-			$this->store_requests_meta( RequestsLibrary::CLASS_NAME_V1, self::FROM_WP_CORE );
-
-			return $state;
+			if ( class_exists( '\\Requests' ) ) {
+				\Requests::register_autoloader();
+				$this->store_requests_meta( RequestsLibrary::CLASS_NAME_V1, self::FROM_WP_CORE );
+				return $state;
+			}
 		}
 
 		// Finally, fall back to the Requests version bundled with WP-CLI.
 		$autoloader = new Autoloader();
 		$autoloader->add_namespace(
 			'WpOrg\Requests',
-			WP_CLI_VENDOR_DIR . '/rmccue/requests/src'
+			WP_CLI_ROOT . '/bundle/rmccue/requests/src'
 		);
 
 		$autoloader->register();

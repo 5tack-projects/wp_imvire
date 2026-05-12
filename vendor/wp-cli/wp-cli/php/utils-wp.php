@@ -9,6 +9,9 @@ use ReflectionParameter;
 use WP_CLI;
 use WP_CLI\UpgraderSkin;
 
+/**
+ * @return void
+ */
 function wp_not_installed() {
 	global $wpdb, $table_prefix;
 	if ( ! is_blog_installed() && ! defined( 'WP_INSTALLING' ) ) {
@@ -23,6 +26,7 @@ function wp_not_installed() {
 			}
 		}
 		if ( count( $found_prefixes ) ) {
+			sort( $found_prefixes );
 			$prefix_list   = implode( ', ', $found_prefixes );
 			$install_label = count( $found_prefixes ) > 1 ? 'installations' : 'installation';
 			WP_CLI::error(
@@ -40,13 +44,17 @@ function wp_not_installed() {
 }
 
 // phpcs:disable WordPress.PHP.IniSet -- Intentional & correct usage.
+
+/**
+ * @return void
+ */
 function wp_debug_mode() {
 	if ( WP_CLI::get_config( 'debug' ) ) {
 		if ( ! defined( 'WP_DEBUG' ) ) {
 			define( 'WP_DEBUG', true );
 		}
 
-		error_reporting( E_ALL & ~E_DEPRECATED & ~E_STRICT );
+		error_reporting( E_ALL & ~E_DEPRECATED );
 	} else {
 		if ( WP_DEBUG ) {
 			error_reporting( E_ALL );
@@ -79,32 +87,49 @@ function wp_debug_mode() {
 	}
 
 	// XDebug already sends errors to STDERR.
-	ini_set( 'display_errors', function_exists( 'xdebug_debug_zval' ) ? false : 'STDERR' );
+	ini_set( 'display_errors', function_exists( 'xdebug_debug_zval' ) ? false : 'stderr' );
 }
 // phpcs:enable
 
+/**
+ * @return void
+ */
 function replace_wp_die_handler() {
 	\remove_filter( 'wp_die_handler', '_default_wp_die_handler' );
 	\add_filter(
 		'wp_die_handler',
-		function() {
+		function () {
 			return __NAMESPACE__ . '\\wp_die_handler';
 		}
 	);
 }
 
+/**
+ * @return never
+ */
 function wp_die_handler( $message ) {
+
 	if ( $message instanceof \WP_Error ) {
-		$message = $message->get_error_message();
+		$text_message = $message->get_error_message();
+		$error_data   = $message->get_error_data( 'internal_server_error' );
+		if ( ! empty( $error_data['error']['file'] )
+			&& false !== stripos( $error_data['error']['file'], 'themes/functions.php' ) ) {
+			$text_message = 'An unexpected functions.php file in the themes directory may have caused this internal server error.';
+		}
+	} else {
+		$text_message = $message;
 	}
 
-	$message = wp_clean_error_message( $message );
+	$text_message = wp_clean_error_message( $text_message );
 
-	WP_CLI::error( $message );
+	WP_CLI::error( $text_message );
 }
 
 /**
  * Clean HTML error message so suitable for text display.
+ *
+ * @param string $message
+ * @return string
  */
 function wp_clean_error_message( $message ) {
 	$original_message = trim( $message );
@@ -127,6 +152,10 @@ function wp_clean_error_message( $message ) {
 	return $message;
 }
 
+/**
+ * @param string $url
+ * @return string
+ */
 function wp_redirect_handler( $url ) {
 	WP_CLI::warning( 'Some code is trying to do a URL redirect. Backtrace:' );
 
@@ -137,13 +166,26 @@ function wp_redirect_handler( $url ) {
 	return $url;
 }
 
+/**
+ * @param string $since Version number.
+ * @param string $path File to include.
+ * @return void
+ */
 function maybe_require( $since, $path ) {
 	if ( wp_version_compare( $since, '>=' ) ) {
 		require $path;
 	}
 }
 
-function get_upgrader( $class, $insecure = false ) {
+/**
+ *
+ * @param class-string $class_name
+ * @param bool         $insecure
+ *
+ * @return \WP_Upgrader Upgrader instance.
+ * @throws \ReflectionException
+ */
+function get_upgrader( $class_name, $insecure = false ) {
 	if ( ! class_exists( '\WP_Upgrader' ) ) {
 		if ( file_exists( ABSPATH . 'wp-admin/includes/class-wp-upgrader.php' ) ) {
 			include ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
@@ -158,30 +200,31 @@ function get_upgrader( $class, $insecure = false ) {
 
 	$uses_insecure_flag = false;
 
-	$reflection = new ReflectionClass( $class );
-	if ( $reflection ) {
-		$constructor = $reflection->getConstructor();
-		if ( $constructor ) {
-			$arguments = $constructor->getParameters();
-			/** @var ReflectionParameter $argument */
-			foreach ( $arguments as $argument ) {
-				if ( 'insecure' === $argument->name ) {
-					$uses_insecure_flag = true;
-					break;
-				}
+	$reflection  = new ReflectionClass( $class_name );
+	$constructor = $reflection->getConstructor();
+	if ( $constructor ) {
+		$arguments = $constructor->getParameters();
+		/** @var ReflectionParameter $argument */
+		foreach ( $arguments as $argument ) {
+			if ( 'insecure' === $argument->name ) {
+				$uses_insecure_flag = true;
+				break;
 			}
 		}
 	}
 
 	if ( $uses_insecure_flag ) {
-		return new $class( new UpgraderSkin(), $insecure );
+		return new $class_name( new UpgraderSkin(), $insecure );
 	} else {
-		return new $class( new UpgraderSkin() );
+		return new $class_name( new UpgraderSkin() );
 	}
 }
 
 /**
  * Converts a plugin basename back into a friendly slug.
+ *
+ * @param string $basename
+ * @return string
  */
 function get_plugin_name( $basename ) {
 	if ( false === strpos( $basename, '/' ) ) {
@@ -193,6 +236,12 @@ function get_plugin_name( $basename ) {
 	return $name;
 }
 
+/**
+ * Determine whether a plugin is skipped.
+ *
+ * @param string $file
+ * @return bool
+ */
 function is_plugin_skipped( $file ) {
 	$name = get_plugin_name( str_replace( WP_PLUGIN_DIR . '/', '', $file ) );
 
@@ -208,10 +257,22 @@ function is_plugin_skipped( $file ) {
 	return in_array( $name, array_filter( $skipped_plugins ), true );
 }
 
+/**
+ * Get theme name from path.
+ *
+ * @param string $path
+ * @return string
+ */
 function get_theme_name( $path ) {
 	return basename( $path );
 }
 
+/**
+ * Determine whether a theme is skipped.
+ *
+ * @param string $path
+ * @return bool
+ */
 function is_theme_skipped( $path ) {
 	$name = get_theme_name( $path );
 
@@ -230,6 +291,8 @@ function is_theme_skipped( $path ) {
 /**
  * Register the sidebar for unused widgets.
  * Core does this in /wp-admin/widgets.php, which isn't helpful.
+ *
+ * @return void
  */
 function wp_register_unused_sidebar() {
 
@@ -245,7 +308,6 @@ function wp_register_unused_sidebar() {
 			'after_title'   => '',
 		]
 	);
-
 }
 
 /**
@@ -259,6 +321,8 @@ function wp_register_unused_sidebar() {
  */
 function wp_get_cache_type() {
 	global $_wp_using_ext_object_cache, $wp_object_cache;
+
+	$message = 'Unknown';
 
 	if ( ! empty( $_wp_using_ext_object_cache ) ) {
 		// Test for Memcached PECL extension memcached object cache (https://github.com/tollmanz/wordpress-memcached-backend)
@@ -307,18 +371,16 @@ function wp_get_cache_type() {
 			$message = 'WP LCache';
 
 		} elseif ( function_exists( 'w3_instance' ) ) {
-			$config  = w3_instance( 'W3_Config' );
-			$message = 'Unknown';
+			$config = w3_instance( 'W3_Config' );
 
 			if ( $config->get_boolean( 'objectcache.enabled' ) ) {
 				$message = 'W3TC ' . $config->get_string( 'objectcache.engine' );
 			}
-		} else {
-			$message = 'Unknown';
 		}
 	} else {
 		$message = 'Default';
 	}
+
 	return $message;
 }
 
@@ -332,6 +394,8 @@ function wp_get_cache_type() {
  * @access public
  * @category System
  * @deprecated 1.5.0
+ *
+ * @return void
  */
 function wp_clear_object_cache() {
 	global $wpdb, $wp_object_cache;
@@ -370,14 +434,12 @@ function wp_clear_object_cache() {
  *
  * Interprets common command-line options into a resolved set of table names.
  *
- * @param array $args Provided table names, or tables with wildcards.
- * @param array $assoc_args Optional flags for groups of tables (e.g. --network)
- * @return array
+ * @param array<string>         $args Provided table names, or tables with wildcards.
+ * @param array<string, string> $assoc_args Optional flags for groups of tables (e.g. --network)
+ * @return array<string>
  */
 function wp_get_table_names( $args, $assoc_args = [] ) {
 	global $wpdb;
-
-	$tables = [];
 
 	// Abort if incompatible args supplied.
 	if ( get_flag_value( $assoc_args, 'base-tables-only' ) && get_flag_value( $assoc_args, 'views-only' ) ) {
@@ -429,7 +491,8 @@ function wp_get_table_names( $args, $assoc_args = [] ) {
 			$wp_tables = array_values( $wpdb->tables( $scope ) );
 		}
 
-		if ( ! global_terms_enabled() ) {
+		// The global_terms_enabled() function has been deprecated with WP 6.1+.
+		if ( wp_version_compare( '6.1', '>=' ) || ! global_terms_enabled() ) { // phpcs:ignore WordPress.WP.DeprecatedFunctions.global_terms_enabledFound
 			// Only include sitecategories when it's actually enabled.
 			$wp_tables = array_values( array_diff( $wp_tables, [ $wpdb->sitecategories ] ) );
 		}
@@ -498,40 +561,4 @@ function strip_tags( $string ) {
 	$string = \strip_tags( $string );
 
 	return trim( $string );
-}
-
-/**
- * Internalized version of global_terms_enabled() to get around a bug in WordPress Core.
- *
- * WP Core inadvertently removed the function instead of deprecating it during th 6.1 cycle.
- *
- * @see https://core.trac.wordpress.org/ticket/21734#comment:34
- */
-function global_terms_enabled() {
-	if ( ! is_multisite() ) {
-		return false;
-	}
-
-	static $global_terms = null;
-	if ( is_null( $global_terms ) ) {
-
-		/**
-		 * Filters whether global terms are enabled.
-		 *
-		 * Returning a non-null value from the filter will effectively short-circuit the function
-		 * and return the value of the 'global_terms_enabled' site option instead.
-		 *
-		 * @since 3.0.0
-		 *
-		 * @param null $enabled Whether global terms are enabled.
-		 */
-		$filter = apply_filters( 'global_terms_enabled', null ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
-		if ( ! is_null( $filter ) ) {
-			$global_terms = (bool) $filter;
-		} else {
-			$global_terms = (bool) get_site_option( 'global_terms_enabled', false );
-		}
-	}
-
-	return $global_terms;
 }

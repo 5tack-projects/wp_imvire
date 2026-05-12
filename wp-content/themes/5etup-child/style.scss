@@ -1,0 +1,17 @@
+/*
+ Theme Name:   5etup Child
+ Theme URI:    http://5uraj.nl
+ Description:  WP Theme
+ Author:       Suraj Mohunlol
+ Author URI:   http://5uraj.nl
+ Template:     5etup
+ Version:      1.0.0
+*/
+
+// Default styling
+@import '../../../../../_layout/framework-styling/style.scss';
+
+// Vars 
+@import 'css/default/vars';
+@include default-framework;
+@include fonts-styling;
