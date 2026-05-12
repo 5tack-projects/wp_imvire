@@ -3,7 +3,7 @@
         'name' => 'suraj/wp-5etup',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '59633c59cf281fddf860cbed9db24d9005825d95',
+        'reference' => 'bb46e6fcb95c71c4a5bc6bda35a4e4a4e657654c',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -31,7 +31,7 @@
         'suraj/wp-5etup' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '59633c59cf281fddf860cbed9db24d9005825d95',
+            'reference' => 'bb46e6fcb95c71c4a5bc6bda35a4e4a4e657654c',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
