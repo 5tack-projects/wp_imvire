@@ -18,10 +18,10 @@
 
   "scripts": {
     "post-install-cmd": [
-      "robocopy vendor\\suraj\\wp-5etup . /E /XD vendor .git /XF composer.json composer.lock /NFL /NDL /NJH /NJS /NC /NS"
+      "robocopy vendor\\suraj\\wp-5etup . /E /XD vendor .git uploads /XF composer.json composer.lock wp-config.php .env /NFL /NDL /NJH /NJS /NC /NS"
     ],
     "post-update-cmd": [
-      "robocopy vendor\\suraj\\wp-5etup . /E /XD vendor .git /XF composer.json composer.lock /NFL /NDL /NJH /NJS /NC /NS"
+      "robocopy vendor\\suraj\\wp-5etup . /E /XD vendor .git uploads /XF composer.json composer.lock wp-config.php .env /NFL /NDL /NJH /NJS /NC /NS"
     ]
   }
 }
