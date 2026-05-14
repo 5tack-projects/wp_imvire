@@ -16,7 +16,7 @@
       global $linkedin;
 
       $mobile_number = "27826672";
-      $email = "info@imvire.nl";
+      $email = "info@5uraj.nl";
 
       $email_send = "mailto:$email";
 

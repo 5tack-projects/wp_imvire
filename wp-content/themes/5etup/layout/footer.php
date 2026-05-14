@@ -10,24 +10,31 @@
                     <ul>
                         <li class="">
                             <div class="wrapper">
-                                <span class="title"><?= get_bloginfo( 'name' ) ?></span>
-                                <span class="subtitle"><?= get_bloginfo( 'description' ) ?></span>
-                            </div>
-                        </li>
-                        <li class="pre-icon whatsapp">
-                            <div class="wrapper">
-                                <?php global $phone_display; echo $phone_display; ?>
-                                <a href="<?php global $phone_wha; echo $phone_wha; ?>" class="btn primary">
+                                <strong>Phone</strong>
+                                T. <?php global $phone_display; echo $phone_display; ?>
+                                <a href="<?php global $phone_wha; echo $phone_wha; ?>" class="btn cta whatsapp">
                                     Stuur bericht
                                 </a>
+                                <a href="<?php global $phone_wha; echo $phone_wha; ?>" class="btn primary phone">
+                                    Bellen
+                                </a>
                             </div>
                         </li>
-                        <li class="pre-icon email">
+                        <li class="">
                             <div class="wrapper">
-                                <?php global $email; echo $email; ?>
-                                <a href="<?php global $email_send; echo $email_send; ?>" class="btn">
+                                <strong>Email</strong>
+                                E. <?php global $email; echo $email; ?>
+                                <a href="<?php global $email_send; echo $email_send; ?>" class="btn primary">
                                     Stuur email
                                 </a>
+                            </div>
+                        </li>
+                        <li class="">
+                            <div class="wrapper">
+                                <strong>Bedrijfsinfo</strong>
+                                <span class="title"><?= get_bloginfo( 'name' ) ?></span>
+                                <span class="subtitle"><?= get_bloginfo( 'description' ) ?></span>
+                                KvK: <?php global $kvk; echo $kvk; ?>
                             </div>
                         </li>
                         <!-- <li class="pre-icon linkedin"><a href="<?php //global $linkedin; echo $linkedin; ?>">Let's connect!</a></li> -->

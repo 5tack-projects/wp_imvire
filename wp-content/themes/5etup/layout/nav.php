@@ -32,10 +32,10 @@
             </div> -->
         </div>
 
-        <a href="/contact" class="btn primary" id="cta-nav">
+        <!-- <a href="/contact" class="btn primary" id="cta-nav">
             <i class="fa fa-coffee" aria-hidden="true"></i>
             Coffee
-        </a>
+        </a> -->
 
         <span class="btn menu" onclick="nav()">
             <i class="fa fa-bars" aria-hidden="true"></i>

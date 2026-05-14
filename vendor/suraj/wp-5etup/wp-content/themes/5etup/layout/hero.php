@@ -28,16 +28,9 @@
                     
                     <?php 
                         if(is_page()) {
-                            if(is_page_template('page-main.php')) {
-                                ?>
-                                    <span class="intro-title"><?= bloginfo('description') ?></span>
-                                    <h1><?= bloginfo('title') ?></h1>
-                                <?php 
-                            } else {
+                            if(get_field('intro_title_hero') || get_field('content_hero')) {
                                 if(get_field('intro_title_hero')) {
-                                    ?>
-                                        <span class="intro-title"><?= get_field('intro_title_hero') ?></span>
-                                    <?php 
+                                    ?><span class="intro-title"><?= get_field('intro_title_hero') ?></span><?php
                                 }
                                 if(get_field('content_hero')) {
                                     ?>
@@ -45,11 +38,12 @@
                                             <?= get_field('content_hero')?>
                                         </div>
                                     <?php
-                                } else {
-                                    ?>
-                                        <h1><?= the_title() ?></h1>
-                                    <?php 
                                 }
+                            } else {
+                                ?>
+                                    <span class="intro-title"><?= bloginfo('description') ?></span>
+                                    <h1><?= bloginfo('title') ?></h1>
+                                <?php 
                             }
                         }
                         if(is_single()) {
