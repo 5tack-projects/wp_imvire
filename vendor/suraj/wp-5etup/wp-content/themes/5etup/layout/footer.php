@@ -10,30 +10,41 @@
                     <ul>
                         <li class="">
                             <div class="wrapper">
-                                <strong>Phone</strong>
-                                T. <?php global $phone_display; echo $phone_display; ?>
+                                <span class="title"><?= get_bloginfo( 'name' ) ?></span>
+                                <span class="subtitle"><?= get_bloginfo( 'description' ) ?></span>
+                            </div>
+                        </li>
+                        <br>
+                        <li class="">
+                            <div class="wrapper">
+                                <span>
+                                    <i class="fas fa-phone"></i>
+                                    <?php global $phone_display; echo $phone_display; ?>
+                                </span>
                                 <a href="<?php global $phone_wha; echo $phone_wha; ?>" class="btn cta whatsapp">
                                     Stuur bericht
                                 </a>
-                                <a href="<?php global $phone_wha; echo $phone_wha; ?>" class="btn primary phone">
+                                <a href="<?php global $phone_wha; echo $phone_wha; ?>" class="btn secondary phone">
                                     Bellen
                                 </a>
                             </div>
                         </li>
+                        <br>
                         <li class="">
                             <div class="wrapper">
-                                <strong>Email</strong>
-                                E. <?php global $email; echo $email; ?>
-                                <a href="<?php global $email_send; echo $email_send; ?>" class="btn primary">
+                                <span>
+                                    <i class="fas fa-paper-plane"></i>
+                                    <?php global $email; echo $email; ?>
+                                </span>
+                                <a href="<?php global $email_send; echo $email_send; ?>" class="btn secondary">
                                     Stuur email
                                 </a>
                             </div>
                         </li>
+                        <br>
                         <li class="">
                             <div class="wrapper">
-                                <strong>Bedrijfsinfo</strong>
-                                <span class="title"><?= get_bloginfo( 'name' ) ?></span>
-                                <span class="subtitle"><?= get_bloginfo( 'description' ) ?></span>
+                                <i class="fas fa-info-circle"></i>
                                 KvK: <?php global $kvk; echo $kvk; ?>
                             </div>
                         </li>
