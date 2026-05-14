@@ -3,7 +3,7 @@
         'name' => 'suraj/project-x',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '0a06291463590804198f7638f92be717e127eecd',
+        'reference' => '04d5422e842525b0ecc8cf90fb8379b9b5a342f5',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'suraj/project-x' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '0a06291463590804198f7638f92be717e127eecd',
+            'reference' => '04d5422e842525b0ecc8cf90fb8379b9b5a342f5',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
