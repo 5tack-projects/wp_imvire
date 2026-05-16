@@ -1,0 +1,54 @@
+section.hero {
+
+    &.frontpage {
+        @extend %full-height-scroll;
+        .frame {
+            height: 100%;
+
+            .grid-container {
+                .grid {
+                    &.content {
+                        .content {
+                            h1 {
+                                &#title-frontpage {
+                                    margin-bottom: auto;
+
+                                    @include screen-desktop {
+                                        font-size: $headerHeightDesktop;
+                                    }
+                                    @include screen-tablet {
+                                        font-size: $headerHeightTablet;
+                                    }
+    
+                                    @include screen-mobile {
+                                        font-size: $headerHeightMobile;
+                                    }
+                            
+                                    span {
+                                        &.mark {
+                                            position: relative;
+
+                                            top: unset;
+                                            bottom: 0;
+    
+                                            font-weight: bold;
+    
+                                            &::after {
+                                                @extend .sticker; 
+                                                height: 4px;
+    
+                                                background-color: black;
+    
+                                                content: "";
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

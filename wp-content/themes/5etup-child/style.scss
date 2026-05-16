@@ -15,3 +15,6 @@
 @import 'css/default/vars';
 @include default-framework;
 @include fonts-styling;
+
+// Frame {
+@import 'css/default/frame/hero';
