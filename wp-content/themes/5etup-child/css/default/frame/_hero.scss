@@ -6,45 +6,66 @@ section.hero {
             height: 100%;
 
             .grid-container {
+                height: 100%;
+
                 .grid {
                     &.content {
                         .content {
-                            h1 {
-                                &#title-frontpage {
-                                    margin-bottom: auto;
+                            height: 100%;
 
-                                    @include screen-desktop {
-                                        font-size: $headerHeightDesktop;
-                                    }
-                                    @include screen-tablet {
-                                        font-size: $headerHeightTablet;
-                                    }
-    
-                                    @include screen-mobile {
-                                        font-size: $headerHeightMobile;
-                                    }
-                            
-                                    span {
-                                        &.mark {
-                                            position: relative;
+                            .text {
+                                height: 100%;
 
-                                            top: unset;
-                                            bottom: 0;
+                                display: flex;
+                                flex-direction: column;
+
+                                h1 {
+                                    &#title-frontpage {
+                                        margin-bottom: auto;
     
-                                            font-weight: bold;
+                                        @include screen-desktop {
+                                            font-size: $headerHeightDesktop;
+                                        }
+                                        @include screen-tablet {
+                                            font-size: $headerHeightTablet;
+                                        }
+        
+                                        @include screen-mobile {
+                                            font-size: $headerHeightMobile;
+                                        }
+                                
+                                        span.line {
+                                            
+                                            strong {
+                                                position: relative;
     
-                                            &::after {
-                                                @extend .sticker; 
-                                                height: 4px;
+                                                
+                                                font-weight: bold;
+                                                
+                                                &::after {
+                                                    @extend .sticker; 
+                                                    width: 0;
+                                                    height: 4px;
+                                                    top: unset;
+                                                    bottom: 0;
+        
+                                                    @extend %bg-color-black-100;
+        
+                                                    content: "";
+                                                    transition: 0.25s;
+                                                }
+                                            }
     
-                                                background-color: black;
-    
-                                                content: "";
+                                            &.typed {
+                                                &::after {  
+                                                    width: 100%!important;
+                                                }
                                             }
                                         }
                                     }
                                 }
                             }
+
                         }
                     }
                 }
