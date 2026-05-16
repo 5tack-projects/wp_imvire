@@ -74,7 +74,8 @@
                             */
                         }
                         if(is_home() || is_archive()) {
-                            $title = get_the_archive_title();
+                            // $title = get_the_archive_title();
+                            $title = "Case";
                             if(is_taxonomy('services')) {
                                 // $title = single_term_title();
                             } else {
