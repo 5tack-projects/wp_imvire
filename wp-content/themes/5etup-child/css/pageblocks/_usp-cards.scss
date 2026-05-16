@@ -1,0 +1,32 @@
+section.usp-cards {
+    .frame {
+        .grid-container {
+            .grid {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                // gap: 16px 24px;
+                @extend %gap;
+
+                i {
+                    grid-row: 1 / 10;
+                    margin-top: 6px;
+
+                    @extend %font-size-heading-one;
+                }
+
+                h3 {
+                    margin: 0;
+                }
+
+                p {
+                    margin: 0;
+                }
+
+                a {
+                    margin-top: 8px;
+                }
+            }
+        }
+    }
+
+}
