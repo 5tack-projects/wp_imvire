@@ -4335,15 +4335,11 @@ section.usp-cards .frame .grid-container .grid, section.usp-cards .modal-overlay
   grid-template-columns: auto 1fr;
 }
 section.usp-cards .frame .grid-container .grid i, section.usp-cards .modal-overlay .wrapper .grid-container .grid i, .modal-overlay section.usp-cards .wrapper .grid-container .grid i, section.usp-cards .frame .form-container form .grid i, .form-container section.usp-cards .frame form .grid i, section.usp-cards .modal-overlay .wrapper .form-container form .grid i, .form-container section.usp-cards .modal-overlay .wrapper form .grid i, .modal-overlay section.usp-cards .wrapper .form-container form .grid i, .form-container .modal-overlay section.usp-cards .wrapper form .grid i {
-  grid-row: 1/10;
-  margin-top: 6px;
+  grid-row: 1/3;
 }
 section.usp-cards .frame .grid-container .grid h3, section.usp-cards .modal-overlay .wrapper .grid-container .grid h3, .modal-overlay section.usp-cards .wrapper .grid-container .grid h3, section.usp-cards .frame .form-container form .grid h3, .form-container section.usp-cards .frame form .grid h3, section.usp-cards .modal-overlay .wrapper .form-container form .grid h3, .form-container section.usp-cards .modal-overlay .wrapper form .grid h3, .modal-overlay section.usp-cards .wrapper .form-container form .grid h3, .form-container .modal-overlay section.usp-cards .wrapper form .grid h3 {
   margin: 0;
 }
 section.usp-cards .frame .grid-container .grid p, section.usp-cards .modal-overlay .wrapper .grid-container .grid p, .modal-overlay section.usp-cards .wrapper .grid-container .grid p, section.usp-cards .frame .form-container form .grid p, .form-container section.usp-cards .frame form .grid p, section.usp-cards .modal-overlay .wrapper .form-container form .grid p, .form-container section.usp-cards .modal-overlay .wrapper form .grid p, .modal-overlay section.usp-cards .wrapper .form-container form .grid p, .form-container .modal-overlay section.usp-cards .wrapper form .grid p {
   margin: 0;
-}
-section.usp-cards .frame .grid-container .grid a, section.usp-cards .modal-overlay .wrapper .grid-container .grid a, .modal-overlay section.usp-cards .wrapper .grid-container .grid a, section.usp-cards .frame .form-container form .grid a, .form-container section.usp-cards .frame form .grid a, section.usp-cards .modal-overlay .wrapper .form-container form .grid a, .form-container section.usp-cards .modal-overlay .wrapper form .grid a, .modal-overlay section.usp-cards .wrapper .form-container form .grid a, .form-container .modal-overlay section.usp-cards .wrapper form .grid a {
-  margin-top: 8px;
 }/*# sourceMappingURL=style.css.map */
