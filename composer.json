@@ -18,10 +18,10 @@
 
   "scripts": {
   "post-install-cmd": [
-    "powershell -NoProfile -ExecutionPolicy Bypass -Command \"robocopy 'vendor\\suraj\\wp-5etup' '.' /E /XD vendor .git uploads /XF composer.json composer.lock wp-config.php .env /NFL /NDL /NJH /NJS /NC /NS; if ($LASTEXITCODE -le 7) { exit 0 } else { exit $LASTEXITCODE }\""
-  ],
-  "post-update-cmd": [
-    "powershell -NoProfile -ExecutionPolicy Bypass -Command \"robocopy 'vendor\\suraj\\wp-5etup' '.' /E /XD vendor .git uploads /XF composer.json composer.lock wp-config.php .env /NFL /NDL /NJH /NJS /NC /NS; if ($LASTEXITCODE -le 7) { exit 0 } else { exit $LASTEXITCODE }\""
-  ]
-}
+      "powershell -NoProfile -ExecutionPolicy Bypass -Command \"robocopy 'vendor\\suraj\\wp-5etup' '.' /E /XD .git uploads /XF composer.json composer.lock wp-config.php .env style.scss /NFL /NDL /NJH /NJS /NC /NS; if ($LASTEXITCODE -le 7) { exit 0 } else { exit $LASTEXITCODE }\""
+    ],
+    "post-update-cmd": [
+      "powershell -NoProfile -ExecutionPolicy Bypass -Command \"robocopy 'vendor\\suraj\\wp-5etup' '.' /E /XD .git uploads /XF composer.json composer.lock wp-config.php .env style.scss /NFL /NDL /NJH /NJS /NC /NS; if ($LASTEXITCODE -le 7) { exit 0 } else { exit $LASTEXITCODE }\""
+    ]
+  }
 }

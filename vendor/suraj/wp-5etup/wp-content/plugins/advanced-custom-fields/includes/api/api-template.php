@@ -1,4 +1,13 @@
 <?php
+/**
+ * @package ACF
+ * @author  WP Engine
+ *
+ * © 2026 Advanced Custom Fields (ACF®). All rights reserved.
+ * "ACF" is a trademark of WP Engine.
+ * Licensed under the GNU General Public License v2 or later.
+ * https://www.gnu.org/licenses/gpl-2.0.html
+ */
 
 /**
  * This function will return a custom field value for a specific field name/key + post_id.
@@ -142,7 +151,7 @@ function the_field( $selector, $post_id = false, $format_value = true ) {
  */
 function _acf_log_escaped_html( $function, $selector, $field, $post_id ) {
 	// If the notice isn't shown, no use in logging the errors.
-	if ( apply_filters( 'acf/admin/prevent_escaped_html_notice', false ) ) {
+	if ( apply_filters( 'acf/admin/prevent_escaped_html_notice', true ) ) {
 		return;
 	}
 
@@ -330,7 +339,7 @@ function acf_maybe_get_sub_field( $selectors, $post_id = false, $strict = true )
 	}
 
 	// vars
-	$offset    = acf_get_setting( 'row_index_offset' );
+	$offset    = (int) acf_get_setting( 'row_index_offset' );
 	$selector  = acf_extract_var( $selectors, 0 );
 	$selectors = array_values( $selectors ); // reset keys
 
@@ -346,7 +355,7 @@ function acf_maybe_get_sub_field( $selectors, $post_id = false, $strict = true )
 	for ( $j = 0; $j < count( $selectors ); $j += 2 ) {
 
 		// vars
-		$sub_i      = $selectors[ $j ];
+		$sub_i      = (int) $selectors[ $j ];
 		$sub_s      = $selectors[ $j + 1 ];
 		$field_name = $field['name'];
 
@@ -625,7 +634,7 @@ function have_rows( $selector, $post_id = false ) {
 	}
 
 	// Return true if next row exists.
-	if ( $active_loop && isset( $active_loop['value'][ $active_loop['i'] + 1 ] ) ) {
+	if ( $active_loop && isset( $active_loop['value'][ (int) $active_loop['i'] + 1 ] ) ) {
 		return true;
 	}
 
@@ -707,8 +716,8 @@ function get_row( $format = false ) {
 function get_row_index() {
 
 	// vars
-	$i      = acf_get_loop( 'active', 'i' );
-	$offset = acf_get_setting( 'row_index_offset' );
+	$i      = (int) acf_get_loop( 'active', 'i' );
+	$offset = (int) acf_get_setting( 'row_index_offset' );
 
 	// return
 	return $offset + $i;
@@ -1008,7 +1017,7 @@ function acf_shortcode( $atts ) {
 	// Return if the ACF shortcode is disabled.
 	if ( ! acf_get_setting( 'enable_shortcode' ) ) {
 		if ( is_preview() ) {
-			return apply_filters( 'acf/shortcode/disabled_message', __( '[The ACF shortcode is disabled on this site]', 'acf' ) );
+			return apply_filters( 'acf/shortcode/disabled_message', esc_html__( '[The ACF shortcode is disabled on this site]', 'acf' ) );
 		} else {
 			return;
 		}
@@ -1024,7 +1033,7 @@ function acf_shortcode( $atts ) {
 	// Limit previews of ACF shortcode data for users without publish_posts permissions.
 	$preview_capability = apply_filters( 'acf/shortcode/preview_capability', 'publish_posts' );
 	if ( is_preview() && ! current_user_can( $preview_capability ) ) {
-		return apply_filters( 'acf/shortcode/preview_capability_message', __( '[ACF shortcode value disabled for preview]', 'acf' ) );
+		return apply_filters( 'acf/shortcode/preview_capability_message', esc_html__( '[ACF shortcode value disabled for preview]', 'acf' ) );
 	}
 
 	// Mitigate issue where some AJAX requests can return ACF field data.
@@ -1051,7 +1060,7 @@ function acf_shortcode( $atts ) {
 	if ( $decoded_post_id['type'] === 'post' ) {
 		if ( $atts['post_id'] !== false && ( (int) $atts['post_id'] !== (int) acf_get_valid_post_id() ) && ( ! is_post_publicly_viewable( $decoded_post_id['id'] ) ) && apply_filters( 'acf/shortcode/prevent_access_to_fields_on_non_public_posts', true ) ) {
 			if ( is_preview() ) {
-				return apply_filters( 'acf/shortcode/post_not_public_message', __( '[The ACF shortcode cannot display fields from non-public posts]', 'acf' ) );
+				return apply_filters( 'acf/shortcode/post_not_public_message', esc_html__( '[The ACF shortcode cannot display fields from non-public posts]', 'acf' ) );
 			} else {
 				return;
 			}
@@ -1072,8 +1081,28 @@ function acf_shortcode( $atts ) {
 
 	$field_type = is_array( $field ) && isset( $field['type'] ) ? $field['type'] : 'text';
 
+	if ( ! acf_field_type_supports( $field_type, 'bindings', true ) ) {
+		if ( is_preview() ) {
+			return apply_filters( 'acf/shortcode/field_not_supported_message', '[' . esc_html__( 'The requested ACF field type does not support output in bindings or the ACF Shortcode.', 'acf' ) . ']' );
+		} else {
+			return;
+		}
+	}
+
+	if ( isset( $field['allow_in_bindings'] ) && ! $field['allow_in_bindings'] ) {
+		if ( is_preview() ) {
+			return apply_filters( 'acf/shortcode/field_not_allowed_message', '[' . esc_html__( 'The requested ACF field is not allowed to be output in bindings or the ACF Shortcode.', 'acf' ) . ']' );
+		} else {
+			return;
+		}
+	}
+
 	if ( apply_filters( 'acf/shortcode/prevent_access', false, $atts, $decoded_post_id['id'], $decoded_post_id['type'], $field_type, $field ) ) {
 		return;
+	}
+
+	if ( is_array( $value ) ) {
+		$value = implode( ', ', $value );
 	}
 
 	// Temporarily always get the unescaped version for action comparison.
@@ -1315,8 +1344,8 @@ function add_sub_row( $selector, $row = false, $post_id = false ) {
 function update_row( $selector, $i = 1, $row = false, $post_id = false ) {
 
 	// vars
-	$offset = acf_get_setting( 'row_index_offset' );
-	$i      = $i - $offset;
+	$offset = (int) acf_get_setting( 'row_index_offset' );
+	$i      = (int) $i - $offset;
 
 	// filter post_id
 	$post_id = acf_get_valid_post_id( $post_id );
@@ -1360,8 +1389,8 @@ function update_sub_row( $selector, $i = 1, $row = false, $post_id = false ) {
 
 	// vars
 	$sub_field = false;
-	$offset    = acf_get_setting( 'row_index_offset' );
-	$i         = $i - $offset;
+	$offset    = (int) acf_get_setting( 'row_index_offset' );
+	$i         = (int) $i - $offset;
 
 	// get sub field
 	if ( is_array( $selector ) ) {
@@ -1407,8 +1436,8 @@ function update_sub_row( $selector, $i = 1, $row = false, $post_id = false ) {
 function delete_row( $selector, $i = 1, $post_id = false ) {
 
 	// vars
-	$offset = acf_get_setting( 'row_index_offset' );
-	$i      = $i - $offset;
+	$offset = (int) acf_get_setting( 'row_index_offset' );
+	$i      = (int) $i - $offset;
 
 	// filter post_id
 	$post_id = acf_get_valid_post_id( $post_id );
@@ -1457,8 +1486,8 @@ function delete_sub_row( $selector, $i = 1, $post_id = false ) {
 
 	// vars
 	$sub_field = false;
-	$offset    = acf_get_setting( 'row_index_offset' );
-	$i         = $i - $offset;
+	$offset    = (int) acf_get_setting( 'row_index_offset' );
+	$i         = (int) $i - $offset;
 
 	// get sub field
 	if ( is_array( $selector ) ) {
