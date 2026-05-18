@@ -1,5 +1,5 @@
 <footer>
-    <div class="block-full">
+    <div class="block-full container">
         <div class="frame">
             <div class="grid-container">
                 <div class="grid menu">
@@ -16,36 +16,52 @@
                         </li>
                         <br>
                         <li class="">
-                            <div class="wrapper">
-                                <span>
-                                    <i class="fas fa-phone"></i>
-                                    <?php global $phone_display; echo $phone_display; ?>
-                                </span>
-                                <a href="<?php global $phone_wha; echo $phone_wha; ?>" class="btn cta whatsapp">
-                                    Stuur bericht
-                                </a>
-                                <a href="<?php global $phone_wha; echo $phone_wha; ?>" class="btn secondary phone">
-                                    Bellen
-                                </a>
+                            <div class="wrapper hor">
+                                <i class="fas fa-phone"></i>
+                                <div class="wrapper ver">
+                                    <span>
+                                        <?php global $phone_display; echo $phone_display; ?>
+                                    </span>
+                                    <a href="<?php global $phone_wha; echo $phone_wha; ?>" class="btn cta whatsapp">
+                                        Whatsapp
+                                    </a>
+                                    <a href="<?php global $phone_wha; echo $phone_wha; ?>" class="btn secondary phone">
+                                        Bellen
+                                    </a>
+                                </div>
                             </div>
                         </li>
                         <br>
                         <li class="">
-                            <div class="wrapper">
-                                <span>
-                                    <i class="fas fa-paper-plane"></i>
-                                    <?php global $email; echo $email; ?>
-                                </span>
-                                <a href="<?php global $email_send; echo $email_send; ?>" class="btn secondary">
-                                    Stuur email
-                                </a>
+                            <div class="wrapper hor">
+                                <i class="fas fa-paper-plane"></i>
+                                <div class="wrapper">
+                                    <span>
+                                        <?php global $email; echo $email; ?>
+                                    </span>
+                                    <a href="<?php global $email_send; echo $email_send; ?>" class="btn secondary">
+                                        Email sturen
+                                    </a>
+                                </div>
                             </div>
                         </li>
                         <br>
                         <li class="">
-                            <div class="wrapper">
-                                <i class="fas fa-info-circle"></i>
-                                KvK: <?php global $kvk; echo $kvk; ?>
+                            <div class="wrapper hor">
+                                <i class="fas fa-building"></i>
+                                <div class="wrapper">
+                                    <span class="title"><?= get_bloginfo( 'name' ) ?></span>
+                                    <span class="subtitle"><?= get_bloginfo( 'description' ) ?></span>
+                                    KvK: <?php global $kvk; echo $kvk; ?>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="">
+                            <div class="wrapper hor">
+                                <i class="fas fa-map-marker"></i>
+                                <div class="wrapper">
+                                    <?php global $location; echo $location; ?>
+                                </div>
                             </div>
                         </li>
                         <!-- <li class="pre-icon linkedin"><a href="<?php //global $linkedin; echo $linkedin; ?>">Let's connect!</a></li> -->
@@ -84,6 +100,18 @@
                     <h4>Formulier</h4>
                     <?= get_template_part('partials/components/forms/mail') ?>
                 </div>
+            </div>
+        </div>
+        <div class="footer-tail">
+            <div class="frame">
+                <ul>
+                    <li><a href="<?php global $linkedin; echo $linkedin; ?>"><i class="fab fa-linkedin"></i></a></li>
+                    <li><i class="far fa-copyright"></i> <?php global $copyright; echo $copyright; ?></li>
+                </ul>
+                <ul id="owner">
+                    <li>Powered by Wordpress</li>
+                    <li><a href="https://www.5uraj.nl">Webdesign by 5uraj</a></li>
+                </ul>
             </div>
         </div>
     </div>

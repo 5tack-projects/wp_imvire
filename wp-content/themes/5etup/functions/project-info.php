@@ -12,8 +12,15 @@
       global $email;
       global $email_send;
 
+      global $adres;
+      global $postcode;   
+      global $city;
+      global $location;
+
       global $kvk;
       global $linkedin;
+
+      global $copyright;
 
       $mobile_number = "27826672";
       $email = "info@5uraj.nl";
@@ -26,11 +33,14 @@
       $phone_call = "";
 
       $kvk = "57589232";
-      // $adres = "Adress 12";
-      // $postcode = "1234 PS";
-      // $city = "City";
+      $adres = "Vedelring 65";
+      $postcode = "4876 EK";
+      $city = "Etten-Leur";
+      $location = "$adres </br> $postcode, $city";
 
       $linkedin = "https://www.linkedin.com/in/suraj-mohunlol-30596a32/";
+
+      $copyright = "2003 - " . date('Y');
   }
   add_action( 'init', 'set_global_nav_var' );
 

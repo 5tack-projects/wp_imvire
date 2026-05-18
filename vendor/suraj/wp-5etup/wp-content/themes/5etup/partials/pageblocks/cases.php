@@ -20,14 +20,19 @@
                         <?php 
                             $cases = get_field('cases_pageblock');
                             foreach($cases as $case) {
-                                // var_dump($case);
                                 ?>
                                     <div class="grid card case">
-                                        <div class="img">
-                                            <!-- <span class="intro-title">Case</span>
-                                            <h3><?= $case->name ?></h3>
-                                            <a href="<?= get_term_link($case->term_id, 'cases'); ?>" class="btn secondary">Bekijk</a> -->
-
+                                        <div 
+                                            class="img"
+                                            <?php 
+                                                if(get_field('bg_img_tax', 'term_' . $case->term_id)) {
+                                                    $bg_img = get_field('bg_img_tax', 'term_' . $case->term_id);
+                                                    ?>
+                                                        style="background-image: url(<?= $bg_img ?>);"
+                                                    <?php
+                                                }
+                                            ?>
+                                        >
                                             <a href="<?= get_term_link($case->term_id, 'cases'); ?>" class="btn tertiary">
                                                 <?= $case->name ?>
                                             </a>

@@ -1,3 +1,13 @@
+<?php
+    $menu_html = wp_nav_menu([
+    'theme_location' => 'main',
+    'menu_id'        => 'main-nav',
+    'menu_class'     => '',
+    'order'          => 'ASC',
+    'echo'           => false,
+    ]);
+?>
+
 <template id="main-menu-template">
   <?php echo $menu_html; ?>
 </template>
@@ -37,7 +47,16 @@
             Coffee
         </a> -->
 
-        <span class="btn menu" onclick="nav()">
+        <!-- <span class="btn menu" onclick="nav()">
+            <i class="fa fa-bars" aria-hidden="true"></i>
+            <span class="text">Menu</span>
+        </span> -->
+
+        <span
+            class="btn secondary "
+            onclick="active_modal(this)"
+            data-menu="main-nav"
+        >
             <i class="fa fa-bars" aria-hidden="true"></i>
             <span class="text">Menu</span>
         </span>
@@ -58,3 +77,11 @@
     </div>
 
 </nav>
+
+<div 
+    id="modal" 
+    class="modal-overlay"
+    onclick="active_modal(this)"
+    data-active="0"
+>
+</div>

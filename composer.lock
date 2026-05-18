@@ -8,25 +8,25 @@
     "packages": [
         {
             "name": "suraj/wp-5etup",
-            "version": "1.0.6",
+            "version": "1.0.7",
             "source": {
                 "type": "git",
                 "url": "git@github.com:5tack-projects/wp_5etup.git",
-                "reference": "a4c4056a8c1fe21e4d189437956c26dc866ff6a2"
+                "reference": "6f3fd8d0a11ec4a773e6f280ce52aa01e47848b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/5tack-projects/wp_5etup/zipball/a4c4056a8c1fe21e4d189437956c26dc866ff6a2",
-                "reference": "a4c4056a8c1fe21e4d189437956c26dc866ff6a2",
+                "url": "https://api.github.com/repos/5tack-projects/wp_5etup/zipball/6f3fd8d0a11ec4a773e6f280ce52aa01e47848b3",
+                "reference": "6f3fd8d0a11ec4a773e6f280ce52aa01e47848b3",
                 "shasum": ""
             },
             "type": "library",
             "description": "Default WordPress stack from Suraj",
             "support": {
-                "source": "https://github.com/5tack-projects/wp_5etup/tree/1.0.6",
+                "source": "https://github.com/5tack-projects/wp_5etup/tree/1.0.7",
                 "issues": "https://github.com/5tack-projects/wp_5etup/issues"
             },
-            "time": "2026-05-14T08:56:18+00:00"
+            "time": "2026-05-18T11:01:49+00:00"
         }
     ],
     "packages-dev": [],
